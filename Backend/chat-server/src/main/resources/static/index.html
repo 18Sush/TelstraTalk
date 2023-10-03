@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Users</title>
+</head>
+<body>
+    <h1>Online Users</h1>
+    <ul id="userList"></ul>
+
+    <script>
+        function updateUserList() {
+            fetch('/getOnlineUsers')  // Send a GET request to the server
+                .then(response => response.json())
+                .then(data => {
+                    const userList = document.getElementById('userList');
+                    userList.innerHTML = '';
+
+                    data.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = user;
+                        userList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Call the updateUserList function every few seconds
+        setInterval(updateUserList, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: chatdb, testdb_security
+    networks:
+      - my-network
+
+
+  reactapp:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+
+  springbootapp:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "2000:2000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/chatdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb_security
+    depends_on:
+      - mysql
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

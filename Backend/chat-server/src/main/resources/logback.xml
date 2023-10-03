@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Define the appender for Kafka consumer messages -->
+    <appender name="KafkaConsumerFileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>C:\kafka\recoveryfiles\disaster.txt</file> <!-- Specify the file path -->
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define a logger for Kafka consumer messages -->
+    <logger name="com.proj.kafkachat.controller.ChatController" level="INFO">
+    <appender-ref ref="KafkaConsumerFileAppender"/>
+</logger>
+
+    <!-- Root logger configuration -->
+    <root level="INFO">
+        <appender-ref ref="KafkaConsumerFileAppender"/>
+    </root>
+
+</configuration>
